@@ -90,15 +90,18 @@ const Books = {
 
   // Lấy các sách liên quan (cùng category, loại trừ sách hiện tại)
   getRelated: async (bookId, limit = 4) => {
+    limit = Number(limit) || 4;
+
     const sql = `
       SELECT DISTINCT b.*
       FROM books b
       INNER JOIN book_categories bc1 ON bc1.book_id = b.book_id
       INNER JOIN book_categories bc2 ON bc2.category_id = bc1.category_id
       WHERE bc2.book_id = ? AND b.book_id != ?
-      LIMIT ?
+      LIMIT ${limit}
     `;
-    const [rows] = await db.execute(sql, [bookId, bookId, limit]);
+
+    const [rows] = await db.execute(sql, [bookId, bookId]);
     return rows;
   },
 };

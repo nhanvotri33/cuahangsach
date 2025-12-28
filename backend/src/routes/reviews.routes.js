@@ -22,8 +22,17 @@ router.get("/:id", async (req, res) => {
 
 // User
 router.post("/", verifyToken, async (req, res) => {
+  console.log(req.body);
   const id = uuidv4();
-  await Reviews.create({ review_id: id, ...req.body });
+
+  await Reviews.create({
+    review_id: id,
+    book_id: req.body.book_id,
+    customer_id: req.userId,
+    rating: req.body.rating,
+    comment: req.body.comment,
+  });
+
   res.status(201).json(await Reviews.getById(id));
 });
 

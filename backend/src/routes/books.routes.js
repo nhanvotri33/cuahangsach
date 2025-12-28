@@ -15,14 +15,12 @@ router.get("/", async (req, res, next) => {
 });
 
 // GET RELATED BOOKS (must come before /:id route)
-router.get("/:id/related", async (req, res, next) => {
-  try {
-    const limit = parseInt(req.query.limit) || 4;
-    const relatedBooks = await Books.getRelated(req.params.id, limit);
-    res.json(relatedBooks);
-  } catch (err) {
-    next(err);
-  }
+router.get("/:id/related", async (req, res) => {
+  const { id } = req.params;
+  const limit = Number(req.query.limit) || 4;
+
+  const data = await Books.getRelated(id, limit);
+  res.json(data);
 });
 
 // GET BY ID

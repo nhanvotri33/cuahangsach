@@ -2,26 +2,63 @@ const db = require("../config/db");
 
 const Reviews = {
   getAll: async () => {
-    const [rows] = await db.execute("SELECT * FROM reviews");
+    const sql = `
+      SELECT
+        r.review_id,
+        r.book_id,
+        r.customer_id,
+        r.rating,
+        r.comment,
+        r.created_at,
+        c.full_name AS user_name
+      FROM reviews r
+      LEFT JOIN customers c
+        ON c.customer_id = r.customer_id
+      ORDER BY r.created_at DESC
+    `;
+    const [rows] = await db.execute(sql);
     return rows;
   },
 
   getById: async (id) => {
-    const [rows] = await db.execute(
-      "SELECT * FROM reviews WHERE review_id = ?",
-      [id]
-    );
+    const sql = `
+      SELECT
+        r.review_id,
+        r.book_id,
+        r.customer_id,
+        r.rating,
+        r.comment,
+        r.created_at,
+        c.name AS user_name
+      FROM reviews r
+      LEFT JOIN customers c
+        ON c.customer_id = r.customer_id
+      WHERE r.review_id = ?
+    `;
+    const [rows] = await db.execute(sql, [id]);
     return rows[0] || null;
   },
 
   getByBook: async (bookId) => {
-    const [rows] = await db.execute(
-      "SELECT * FROM reviews WHERE book_id = ? ORDER BY created_at DESC",
-      [bookId]
-    );
+    const sql = `
+      SELECT
+        r.review_id,
+        r.book_id,
+        r.customer_id,
+        r.rating,
+        r.comment,
+        r.created_at,
+        c.name AS user_name
+      FROM reviews r
+      LEFT JOIN customers c
+        ON c.customer_id = r.customer_id
+      WHERE r.book_id = ?
+      ORDER BY r.created_at DESC
+    `;
+
+    const [rows] = await db.execute(sql, [bookId]);
     return rows;
   },
-
   create: async (data) => {
     const sql = `
       INSERT INTO reviews (review_id, book_id, customer_id, rating, comment)
