@@ -1,5 +1,4 @@
 ﻿# cuahangsach
 
-•	Admin 
-o	Email: admin@gmail.com
-o	Password: adminadmin
+
+
