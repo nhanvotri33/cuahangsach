@@ -1,0 +1,87 @@
+HƯỚNG DẪN SỬ DỤNG
+3.2 Yêu cầu môi trường
+Trước khi chạy hệ thống, cần đảm bảo máy tính đã cài đặt các phần mềm sau:
+•	Node.js phiên bản 18.x trở lên
+•	npm (đi kèm Node.js)
+•	MySQL phiên bản 8.0 trở lên
+•	Trình duyệt web (Google Chrome, Microsoft Edge, Firefox, …)
+•	Git (khuyến nghị để quản lý mã nguồn)
+3.3 Cấu trúc thư mục hệ thống
+Hệ thống được chia thành hai phần chính:
+doanchuyennganh/
+├── backend/        # Node.js + Express (API)
+└── frontend/       # React + TypeScript + Tailwind CSS
+3.4 Hướng dẫn chạy Backend
+3.4.1 Cấu hình cơ sở dữ liệu MySQL
+1.	Mở MySQL và tạo database:
+CREATE DATABASE shoe_shop CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+2.	Import file dữ liệu (nếu có):
+mysql -u root -p bookstore < database.sql
+3.4.2 Cấu hình biến môi trường Backend
+Tại thư mục backend/, tạo file .env:
+PORT=5000
+DB_HOST=localhost
+DB_USER=root
+DB_PASSWORD=
+DB_NAME=bookstore
+
+JWT_SECRET=your_jwt_secret
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+3.4.3 Cài đặt và chạy Backend
+Thực hiện các lệnh sau:
+cd backend
+npm install
+npm start
+Nếu thành công, hệ thống sẽ hiển thị:
+Server running on port 5000
+Database connected successfully
+Backend API sẽ chạy tại:
+http://localhost:5000
+3.5 Hướng dẫn chạy Frontend
+3.5.1 Cấu hình biến môi trường Frontend
+Tại thư mục frontend/, tạo file .env:
+VITE_API_URL=http://localhost:5000/api
+3.5.2 Cài đặt và chạy Frontend
+Thực hiện các lệnh sau:
+cd frontend
+npm install
+npm run dev
+Nếu thành công, hệ thống sẽ hiển thị:
+Local: http://localhost:5173
+Frontend sẽ chạy tại:
+http://localhost:5173
+3.6 Tài khoản mặc định
+Sau khi import database, hệ thống có thể có sẵn tài khoản mặc định:
+•	Admin đăng ký
+o	Email: admin@gmail.com
+o	Password: adminadmin
+•	User: đăng ký
+o	Email: đăng ký 
+o	Password: đăng ký
+(Nếu không có sẵn, quản trị viên có thể tạo mới trực tiếp trong database.)
+3.7 Kiểm tra hoạt động hệ thống
+Sau khi chạy thành công cả Backend và Frontend:
+1.	Truy cập http://localhost:5173
+2.	Đăng nhập bằng tài khoản user để kiểm tra:
+o	Xem sản phẩm
+o	Thêm vào giỏ hàng
+o	Đặt hàng
+3.	Đăng nhập bằng tài khoản admin để kiểm tra:
+o	Quản lý danh mục, sản phẩm, biến thể
+o	Quản lý đơn hàng
+o	Xem dashboard thống kê
+3.8 Một số lỗi thường gặp và cách khắc phục
+3.8.1 Lỗi không kết nối được database
+•	Kiểm tra lại thông tin trong file .env
+•	Đảm bảo MySQL đang chạy
+•	Kiểm tra tên database có đúng không
+3.8.2 Lỗi CORS khi gọi API
+•	Kiểm tra cấu hình CORS trong Backend
+•	Đảm bảo VITE_API_URL trỏ đúng địa chỉ Backend
+3.8.3 Lỗi không upload được ảnh
+•	Kiểm tra cấu hình Cloudinary trong .env
+•	Đảm bảo API key và secret chính xác
+3.9 Kết luận
+Sau khi thực hiện đầy đủ các bước trên, hệ thống Bookstore sẽ được khởi chạy thành công trên môi trường local. Hệ thống sẵn sàng để kiểm thử, demo hoặc triển khai trong thực tế.
